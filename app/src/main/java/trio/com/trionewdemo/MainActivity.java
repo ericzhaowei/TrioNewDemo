@@ -144,4 +144,11 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(LIST_DATA_KEY, jsonStr);
         editor.commit();
     }
+
+    public void openBrowserActivity(String content) {
+        Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+        intent.putExtra("url", content);
+
+        startActivity(intent);
+    }
 }

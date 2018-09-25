@@ -120,10 +120,10 @@ public class MainListViewAdapter extends BaseAdapter {
 
                 viewHolder.textView.setText(spannableString);
 
-                view.setOnClickListener(new View.OnClickListener() {
+                viewHolder.textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        // open webview
+                        mainActivity.openBrowserActivity(item.content);
                     }
                 });
             } else {
