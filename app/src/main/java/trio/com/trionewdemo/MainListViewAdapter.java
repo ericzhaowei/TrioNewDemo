@@ -150,7 +150,7 @@ public class MainListViewAdapter extends BaseAdapter {
 
                     @Override
                     public void onLongPress(MotionEvent motionEvent) {
-                        if (motionEvent.getSize() > 0.2) {
+//                        if (motionEvent.getSize() > 0.2) {
                             Point p = new Point((int)motionEvent.getRawX(), (int)motionEvent.getRawY());
                             SharedPreferences sp = mainActivity.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
                             String showType = sp.getString(STYLE_KEY, Constant.STYLE_TYPE.CIRCLE);
@@ -166,7 +166,7 @@ public class MainListViewAdapter extends BaseAdapter {
 
                             Trio.with(mainActivity).showCard(true).withProgress(progressBarMode, p)
                                     .requestNERInfo(item.content, null);
-                        }
+//                        }
                     }
 
                     @Override
