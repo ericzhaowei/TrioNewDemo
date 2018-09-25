@@ -1,14 +1,13 @@
 package trio.com.trionewdemo;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,18 +22,21 @@ import java.util.ArrayList;
 
 import trio.com.trionewdemo.model.ListItemData;
 
+import static trio.com.trionewdemo.Constant.SP_NAME;
+import static trio.com.trionewdemo.Constant.STYLE_KEY;
+
 public class MainListViewAdapter extends BaseAdapter {
     private ArrayList<ListItemData> mData;
-    private Context mContext;
+    private MainActivity mainActivity;
 
     public static class ItemType {
         public static final int HEAD_TYPE = 0;
         public static final int CONTENT_TYPE = 1;
     }
 
-    public MainListViewAdapter(Context context, ArrayList<ListItemData> data) {
+    public MainListViewAdapter(MainActivity context, ArrayList<ListItemData> data) {
         this.mData = data;
-        this.mContext = context;
+        this.mainActivity = context;
     }
 
     @Override
@@ -66,14 +68,14 @@ public class MainListViewAdapter extends BaseAdapter {
         if (convertView == null) {
             switch (getItemViewType(position)) {
                 case ItemType.HEAD_TYPE:
-                    view = LayoutInflater.from(mContext).inflate(R.layout.group_header_item, null);
+                    view = LayoutInflater.from(mainActivity).inflate(R.layout.group_header_item, null);
                     viewHolder = new ViewHolder();
                     viewHolder.textView = view.findViewById(R.id.text_view);
                     view.setTag(viewHolder);
 
                     break;
                 case ItemType.CONTENT_TYPE:
-                    view = LayoutInflater.from(mContext).inflate(R.layout.list_view_item, null);
+                    view = LayoutInflater.from(mainActivity).inflate(R.layout.list_view_item, null);
                     viewHolder = new ViewHolder();
                     viewHolder.textView = view.findViewById(R.id.text_view);
                     view.setTag(viewHolder);
@@ -125,10 +127,6 @@ public class MainListViewAdapter extends BaseAdapter {
 
                     @Override
                     public boolean onSingleTapUp(MotionEvent motionEvent) {
-                        Point p = new Point((int)motionEvent.getRawX(), (int)motionEvent.getRawY());
-                        Trio.with((Activity) mContext).showCard(true).withProgress(Trio.ProgressBarMode.RADIATION, p)
-                                .requestNERInfo(item.content, null);
-
                         return false;
                     }
 
@@ -139,11 +137,23 @@ public class MainListViewAdapter extends BaseAdapter {
 
                     @Override
                     public void onLongPress(MotionEvent motionEvent) {
-//                        if (motionEvent.getSize() > 0.2) {
+                        if (motionEvent.getSize() > 0.2) {
                             Point p = new Point((int)motionEvent.getRawX(), (int)motionEvent.getRawY());
-                            Trio.with((Activity) mContext).showCard(true).withProgress(Trio.ProgressBarMode.RADIATION, p)
+                            SharedPreferences sp = mainActivity.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+                            String showType = sp.getString(STYLE_KEY, Constant.STYLE_TYPE.CIRCLE);
+
+                            Trio.ProgressBarMode progressBarMode = null;
+                            if (showType.equalsIgnoreCase(Constant.STYLE_TYPE.WAVE)) {
+                                progressBarMode = Trio.ProgressBarMode.RADIATION;
+                            } else if (showType.equalsIgnoreCase(Constant.STYLE_TYPE.LINE)) {
+                                progressBarMode = Trio.ProgressBarMode.TOP_LEFT_TO_RIGHT;
+                            } else if (showType.equalsIgnoreCase(Constant.STYLE_TYPE.CIRCLE)) {
+                                progressBarMode = Trio.ProgressBarMode.CIRCLE;
+                            }
+
+                            Trio.with(mainActivity).showCard(true).withProgress(progressBarMode, p)
                                     .requestNERInfo(item.content, null);
-//                        }
+                        }
                     }
 
                     @Override
