@@ -34,9 +34,9 @@ public class MainListViewAdapter extends BaseAdapter {
         public static final int CONTENT_TYPE = 1;
     }
 
-    public MainListViewAdapter(MainActivity context, ArrayList<ListItemData> data) {
+    public MainListViewAdapter(MainActivity activity, ArrayList<ListItemData> data) {
         this.mData = data;
-        this.mainActivity = context;
+        this.mainActivity = activity;
     }
 
     @Override
@@ -55,17 +55,22 @@ public class MainListViewAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getViewTypeCount() {
+        return 2;
+    }
+
+    @Override
     public int getItemViewType(int position) {
         return mData.get(position).isHead ? ItemType.HEAD_TYPE : ItemType.CONTENT_TYPE;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         final ListItemData item = mData.get(position);
         ViewHolder viewHolder = null;
 
-        if (convertView == null) {
+//        if (convertView == null) { // 出现左滑删除的条目在复用的时候有问题，暂停复用
             switch (getItemViewType(position)) {
                 case ItemType.HEAD_TYPE:
                     view = LayoutInflater.from(mainActivity).inflate(R.layout.group_header_item, null);
@@ -78,15 +83,16 @@ public class MainListViewAdapter extends BaseAdapter {
                     view = LayoutInflater.from(mainActivity).inflate(R.layout.list_view_item, null);
                     viewHolder = new ViewHolder();
                     viewHolder.textView = view.findViewById(R.id.text_view);
+                    viewHolder.deleteTV = view.findViewById(R.id.tv_delete);
                     view.setTag(viewHolder);
                     break;
                 default:
                     break;
             }
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-            view = convertView;
-        }
+//        } else {
+//            viewHolder = (ViewHolder) convertView.getTag();
+//            view = convertView;
+//        }
 
         viewHolder.textView.setText(item.content);
 
@@ -98,6 +104,13 @@ public class MainListViewAdapter extends BaseAdapter {
                 }
             });
         } else {
+            viewHolder.deleteTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mainActivity.deleteItem(position);
+                }
+            });
+
             if (item.content.startsWith("http")) {
                 SpannableString spannableString = new SpannableString(item.content);
                 //设置下划线文字
@@ -177,6 +190,7 @@ public class MainListViewAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public TextView textView;
+        public TextView deleteTV = null;
     }
 
 }

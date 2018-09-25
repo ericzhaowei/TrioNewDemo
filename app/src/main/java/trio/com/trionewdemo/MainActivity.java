@@ -29,18 +29,17 @@ import java.util.List;
 
 import trio.com.trionewdemo.model.ListItemData;
 
-import static trio.com.trionewdemo.Constant.LIST_KEY;
+import static trio.com.trionewdemo.Constant.LIST_DATA_KEY;
 import static trio.com.trionewdemo.Constant.SP_NAME;
 
 public class MainActivity extends AppCompatActivity {
-    private ListView mListView;
+    public ListView mListView;
     private ArrayList<ListItemData> mData;
     private MainListViewAdapter adapter;
     private TextView sendBtn;
     private EditText inputET;
     private SharedPreferences sp;
     private Gson gson;
-    private ArrayList<String> spList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,11 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     inputET.setText("");
 
-                    spList.add(input);
-                    String jsonStr = gson.toJson(spList, new TypeToken<ArrayList<String>>() {}.getType());
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString(LIST_KEY, jsonStr);
-                    editor.commit();
+                    saveListToSp();
                 }
             }
         });
@@ -102,35 +97,51 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         mData = new ArrayList<>();
-        InputStream inputStream;
-        BufferedReader reader;
-        try {
-            inputStream = getAssets().open("init_samples.txt");
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (!TextUtils.isEmpty(line)) {
-                    boolean isTitle = (line.startsWith("[") && line.endsWith("]")) ? true : false;
-                    mData.add(new ListItemData(isTitle, isTitle ? line.substring(1, line.length() - 1) : line));
+
+        String listDataStr = sp.getString(LIST_DATA_KEY, "");
+
+        if (TextUtils.isEmpty(listDataStr)) {
+            InputStream inputStream;
+            BufferedReader reader;
+            try {
+                inputStream = getAssets().open("init_samples.txt");
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (!TextUtils.isEmpty(line)) {
+                        boolean isTitle = (line.startsWith("[") && line.endsWith("]")) ? true : false;
+                        mData.add(new ListItemData(isTitle, isTitle ? line.substring(1, line.length() - 1) : line));
+                    }
                 }
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            mData.add(new ListItemData(true, "手动输入"));
+        } else {
+            String jsonStr = sp.getString(LIST_DATA_KEY, "");
 
-        mData.add(new ListItemData(true, "CustomInput"));
+            ArrayList<ListItemData> spDataList = gson.fromJson(jsonStr, new TypeToken<ArrayList<ListItemData>>() {}.getType());
 
-        String jsonStr = sp.getString(LIST_KEY, "");
-
-        List<String> spDataList = gson.fromJson(jsonStr, new TypeToken<ArrayList<String>>() {}.getType());
-
-        if (spDataList != null) {
-            spList.clear();
-            spList.addAll(spDataList);
-            for (String data : spList) {
-                mData.add(new ListItemData(false, data));
+            if (spDataList != null) {
+                mData.clear();
+                mData.addAll(spDataList);
             }
         }
+    }
+
+    public void deleteItem(int position) {
+        mData.remove(position);
+        adapter.notifyDataSetChanged();
+
+        saveListToSp();
+    }
+
+    private void saveListToSp() {
+        String jsonStr = gson.toJson(mData, new TypeToken<ArrayList<ListItemData>>() {}.getType());
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(LIST_DATA_KEY, jsonStr);
+        editor.commit();
     }
 }

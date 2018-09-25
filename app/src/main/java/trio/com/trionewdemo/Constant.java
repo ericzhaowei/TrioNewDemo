@@ -2,7 +2,7 @@ package trio.com.trionewdemo;
 
 public class Constant {
     public static final String SP_NAME = "custom_sp";
-    public static final String LIST_KEY = "list_key";
+    public static final String LIST_DATA_KEY = "list_data";
     public static final String SHOW_TYPE_KEY = "show_type";
     public static final String STYLE_KEY = "style";
 
