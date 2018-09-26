@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.trio.nnpredict.Requests.RequestCallback;
+import com.trio.nnpredict.TrioWrap.Model.NerResult;
 import com.trio.nnpredict.TrioWrap.Trio;
 
 import java.util.ArrayList;
@@ -165,7 +168,17 @@ public class MainListViewAdapter extends BaseAdapter {
                             }
 
                             Trio.with(mainActivity).showCard(true).withProgress(progressBarMode, p)
-                                    .requestNERInfo(item.content, null);
+                                    .requestNERInfo(item.content, new RequestCallback<NerResult>() {
+                                        @Override
+                                        public void onSuccess(NerResult nerResult) {
+                                            Log.i("", "onSuccess: ");
+                                        }
+
+                                        @Override
+                                        public void onError(String s) {
+                                            Log.i("", "onError: ");
+                                        }
+                                    });
 //                        }
                     }
 
