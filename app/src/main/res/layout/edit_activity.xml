@@ -1,107 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:text="结果页展示方式"
-        android:textSize="@dimen/primary_size"/>
-
-    <RadioGroup
-        android:id="@+id/show_type_group"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RadioButton
-            android:id="@+id/full_screen"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:text="全屏展示"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="@dimen/primary_smaller_size"
-            android:textColor="@color/text_black_666666"
-            android:drawableRight="@android:drawable/btn_radio"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/from_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:text="半屏展示"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="@dimen/primary_smaller_size"
-            android:textColor="@color/text_black_666666"
-            android:drawableRight="@android:drawable/btn_radio"/>
-    </RadioGroup>
+            <EditText
+                android:id="@+id/user_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入用户ID"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray"
-        android:layout_marginTop="10dp"
-        />
+            <EditText
+                android:id="@+id/app_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入用户App Key"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:text="手势动效样式"
-        android:textSize="@dimen/primary_size"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="服务器环境"
+                android:textSize="@dimen/primary_size" />
 
-    <RadioGroup
-        android:id="@+id/style_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <RadioButton
-            android:id="@+id/line_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:text="直线进度条"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="@dimen/primary_smaller_size"
-            android:textColor="@color/text_black_666666"
-            android:drawableRight="@android:drawable/btn_radio"/>
+            <RadioGroup
+                android:id="@+id/server_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/circle_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:text="圆形进度条"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="@dimen/primary_smaller_size"
-            android:textColor="@color/text_black_666666"
-            android:drawableRight="@android:drawable/btn_radio"/>
+                <RadioButton
+                    android:id="@+id/test_server"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:button="@null"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="测试环境"
+                    android:textColor="@color/text_black_666666"
+                    android:textSize="@dimen/primary_smaller_size" />
 
-        <RadioButton
-            android:id="@+id/wave_progress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:text="中间往外波浪线"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textSize="@dimen/primary_smaller_size"
-            android:textColor="@color/text_black_666666"
-            android:drawableRight="@android:drawable/btn_radio"/>
-    </RadioGroup>
+                <RadioButton
+                    android:id="@+id/online_server"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:button="@null"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="正式环境"
+                    android:textColor="@color/text_black_666666"
+                    android:textSize="@dimen/primary_smaller_size" />
+            </RadioGroup>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray"
-        android:layout_marginTop="10dp"
-        />
-</LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="结果页展示方式"
+                android:textSize="@dimen/primary_size" />
+
+            <RadioGroup
+                android:id="@+id/show_type_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/full_screen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:button="@null"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="全屏展示"
+                    android:textColor="@color/text_black_666666"
+                    android:textSize="@dimen/primary_smaller_size" />
+
+                <RadioButton
+                    android:id="@+id/from_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:button="@null"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="半屏展示"
+                    android:textColor="@color/text_black_666666"
+                    android:textSize="@dimen/primary_smaller_size" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="手势动效样式"
+                android:textSize="@dimen/primary_size" />
+
+            <RadioGroup
+                android:id="@+id/style_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/line_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:button="@null"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="直线进度条"
+                    android:textColor="@color/text_black_666666"
+                    android:textSize="@dimen/primary_smaller_size" />
+
+                <RadioButton
+                    android:id="@+id/circle_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:button="@null"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="圆形进度条"
+                    android:textColor="@color/text_black_666666"
+                    android:textSize="@dimen/primary_smaller_size" />
+
+                <RadioButton
+                    android:id="@+id/wave_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:button="@null"
+                    android:drawableRight="@android:drawable/btn_radio"
+                    android:text="中间往外波浪线"
+                    android:textColor="@color/text_black_666666"
+                    android:textSize="@dimen/primary_smaller_size" />
+            </RadioGroup>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/gray" />
+        </LinearLayout>
+
+    </ScrollView>
+</FrameLayout>
