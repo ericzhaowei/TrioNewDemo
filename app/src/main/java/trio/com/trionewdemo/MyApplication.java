@@ -3,6 +3,7 @@ package trio.com.trionewdemo;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.trio.nnpredict.TrioWrap.InitProgressListener;
@@ -32,12 +33,20 @@ public class MyApplication extends Application {
             isTestServer = false;
         }
 
+        String userID = sp.getString(USERID_KEY, "demo");
+        String appKey = sp.getString(APP_KEY, "b8c032ece893c9ccaaea11293c210103452dfb9d");
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(USERID_KEY, userID);
+        editor.putString(APP_KEY, appKey);
+        editor.commit();
+
         Trio trio = new Trio.Builder()
                 .context(getApplicationContext())
                 .assetManager(getAssets())
                 .timeOut(5000)
-                .userID(sp.getString(USERID_KEY, "demo"))  // YOUR USERID
-                .appkey(sp.getString(APP_KEY, "b8c032ece893c9ccaaea11293c210103452dfb9d")) // YOUR APPKEY
+                .userID(userID)  // YOUR USERID
+                .appkey(APP_KEY) // YOUR APPKEY
                 .setTest(isTestServer) // 是否使用测试环境
                 .build(new InitProgressListener() {
                     @Override

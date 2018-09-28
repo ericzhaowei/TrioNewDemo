@@ -168,8 +168,8 @@ public class EditActivity extends AppCompatActivity {
         String appKey = appKeyET.getText().toString();
 
         editor = sp.edit();
-        editor.putString(USERID_KEY, TextUtils.isEmpty(userID) ? "demo" : userID);
-        editor.putString(APP_KEY, TextUtils.isEmpty(appKey) ? "b8c032ece893c9ccaaea11293c210103452dfb9d" : appKey);
+        editor.putString(USERID_KEY, userID);
+        editor.putString(APP_KEY, appKey);
         editor.commit();
 
         Trio.with().mUserID = sp.getString(USERID_KEY, "");
