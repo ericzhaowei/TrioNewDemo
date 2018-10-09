@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import trio.com.trionewdemo.model.ListItemData;
 
 import static trio.com.trionewdemo.Constant.SP_NAME;
-import static trio.com.trionewdemo.Constant.STYLE_KEY;
+import static trio.com.trionewdemo.Constant.PROGRESS_STYLE_KEY;
 
 public class MainListViewAdapter extends BaseAdapter {
     private ArrayList<ListItemData> mData;
@@ -155,19 +155,8 @@ public class MainListViewAdapter extends BaseAdapter {
                     public void onLongPress(MotionEvent motionEvent) {
 //                        if (motionEvent.getSize() > 0.2) {
                             Point p = new Point((int)motionEvent.getRawX(), (int)motionEvent.getRawY());
-                            SharedPreferences sp = mainActivity.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
-                            String showType = sp.getString(STYLE_KEY, Constant.STYLE_TYPE.CIRCLE);
 
-                            Trio.ProgressBarMode progressBarMode = null;
-                            if (showType.equalsIgnoreCase(Constant.STYLE_TYPE.WAVE)) {
-                                progressBarMode = Trio.ProgressBarMode.RADIATION;
-                            } else if (showType.equalsIgnoreCase(Constant.STYLE_TYPE.LINE)) {
-                                progressBarMode = Trio.ProgressBarMode.TOP_LEFT_TO_RIGHT;
-                            } else if (showType.equalsIgnoreCase(Constant.STYLE_TYPE.CIRCLE)) {
-                                progressBarMode = Trio.ProgressBarMode.CIRCLE;
-                            }
-
-                            Trio.with(mainActivity).showCard(true).withProgress(progressBarMode, p)
+                            Trio.with(mainActivity).showCard(Constant.cardStyle).withProgress(Constant.progressBarMode, p)
                                     .requestNERInfo(item.content, new RequestCallback<NerResult>() {
                                         @Override
                                         public void onSuccess(NerResult nerResult) {

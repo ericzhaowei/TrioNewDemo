@@ -11,9 +11,12 @@ import com.trio.nnpredict.TrioWrap.Trio;
 import com.trio.nnpredict.Utils.Consts;
 
 import static trio.com.trionewdemo.Constant.APP_KEY;
+import static trio.com.trionewdemo.Constant.CARD_SHOW_TYPE_KEY;
+import static trio.com.trionewdemo.Constant.PROGRESS_STYLE_KEY;
 import static trio.com.trionewdemo.Constant.SERVER_TYPE_KEY;
 import static trio.com.trionewdemo.Constant.SP_NAME;
 import static trio.com.trionewdemo.Constant.USERID_KEY;
+import static trio.com.trionewdemo.Constant.cardStyle;
 
 public class MyApplication extends Application {
     private SharedPreferences sp;
@@ -40,6 +43,25 @@ public class MyApplication extends Application {
         editor.putString(USERID_KEY, userID);
         editor.putString(APP_KEY, appKey);
         editor.commit();
+
+        // card类型
+        Constant.cardStyle = sp.getString(CARD_SHOW_TYPE_KEY, Constant.CARD_SHOW_TYPE.FROM_BOTTOM)
+                .equalsIgnoreCase(Constant.CARD_SHOW_TYPE.FROM_BOTTOM) ? Trio.CardStyle.DIALOG : Trio.CardStyle.ACTIVITY;
+
+        // 进度条样式
+        switch (sp.getString(PROGRESS_STYLE_KEY, Constant.CARD_SHOW_TYPE.FROM_BOTTOM)) {
+            case Constant.PROGRESS_STYLE_TYPE.CIRCLE:
+                Constant.progressBarMode = Trio.ProgressBarMode.CIRCLE;
+                break;
+            case Constant.PROGRESS_STYLE_TYPE.LINE:
+                Constant.progressBarMode = Trio.ProgressBarMode.TOP_LEFT_TO_RIGHT;
+                break;
+            case Constant.PROGRESS_STYLE_TYPE.WAVE:
+                Constant.progressBarMode = Trio.ProgressBarMode.RADIATION;
+                break;
+            default:
+                Constant.progressBarMode = Trio.ProgressBarMode.RADIATION;
+        }
 
         Trio trio = new Trio.Builder()
                 .context(getApplicationContext())

@@ -79,7 +79,7 @@
                 android:textSize="@dimen/primary_size" />
 
             <RadioGroup
-                android:id="@+id/show_type_group"
+                android:id="@+id/card_show_type_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -124,7 +124,7 @@
                 android:textSize="@dimen/primary_size" />
 
             <RadioGroup
-                android:id="@+id/style_group"
+                android:id="@+id/progress_style_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">

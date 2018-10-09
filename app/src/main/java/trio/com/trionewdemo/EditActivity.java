@@ -1,28 +1,31 @@
 package trio.com.trionewdemo;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.trio.nnpredict.TrioWrap.Trio;
-import com.trio.nnpredict.Utils.HttpUtil;
 
 import static trio.com.trionewdemo.Constant.APP_KEY;
 import static trio.com.trionewdemo.Constant.SERVER_TYPE_KEY;
-import static trio.com.trionewdemo.Constant.SHOW_TYPE_KEY;
+import static trio.com.trionewdemo.Constant.CARD_SHOW_TYPE_KEY;
 import static trio.com.trionewdemo.Constant.SP_NAME;
-import static trio.com.trionewdemo.Constant.STYLE_KEY;
+import static trio.com.trionewdemo.Constant.PROGRESS_STYLE_KEY;
+import static trio.com.trionewdemo.Constant.Settings_TRIO_APPKEY;
+import static trio.com.trionewdemo.Constant.Settings_TRIO_USERID;
 import static trio.com.trionewdemo.Constant.USERID_KEY;
 
 public class EditActivity extends AppCompatActivity {
-    private RadioGroup showTypeRadioGroup;
-    private RadioGroup styleRadioGroup;
+    private RadioGroup cardShowTypeRadioGroup;
+    private RadioGroup progressStyleRadioGroup;
     private RadioGroup serverRadioGroup;
 
     private RadioButton testServerBtn;
@@ -48,11 +51,11 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.edit_activity);
-        showTypeRadioGroup = findViewById(R.id.show_type_group);
+        cardShowTypeRadioGroup = findViewById(R.id.card_show_type_group);
         fullScreenBtn = findViewById(R.id.full_screen);
         fromBottomBtn = findViewById(R.id.from_bottom);
 
-        styleRadioGroup = findViewById(R.id.style_group);
+        progressStyleRadioGroup = findViewById(R.id.progress_style_group);
         lineBtn = findViewById(R.id.line_progress);
         circleBtn = findViewById(R.id.circle_progress);
         waveBtn = findViewById(R.id.wave_progress);
@@ -102,34 +105,26 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-        String showType = sp.getString(SHOW_TYPE_KEY, Constant.SHOW_TYPE.FULL_SCREEN);
+        String showType = sp.getString(CARD_SHOW_TYPE_KEY, Constant.CARD_SHOW_TYPE.FROM_BOTTOM);
 
-        if (showType.equalsIgnoreCase(Constant.SHOW_TYPE.FULL_SCREEN)) {
+        if (showType.equalsIgnoreCase(Constant.CARD_SHOW_TYPE.FULL_SCREEN)) {
             fullScreenBtn.setChecked(true);
         } else {
             fromBottomBtn.setChecked(true);
         }
 
-        String style = sp.getString(STYLE_KEY, Constant.STYLE_TYPE.CIRCLE);
-
-        if (style.equalsIgnoreCase(Constant.STYLE_TYPE.CIRCLE)) {
-            circleBtn.setChecked(true);
-        } else if (style.equalsIgnoreCase(Constant.STYLE_TYPE.LINE)) {
-            lineBtn.setChecked(true);
-        } else if (style.equalsIgnoreCase(Constant.STYLE_TYPE.WAVE)) {
-            waveBtn.setChecked(true);
-        }
-
-        showTypeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        cardShowTypeRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 editor = sp.edit();
                 switch (i) {
                     case R.id.full_screen:
-                        editor.putString(SHOW_TYPE_KEY, Constant.SHOW_TYPE.FULL_SCREEN);
+                        editor.putString(CARD_SHOW_TYPE_KEY, Constant.CARD_SHOW_TYPE.FULL_SCREEN);
+                        Constant.cardStyle = Trio.CardStyle.ACTIVITY;
                         break;
                     case R.id.from_bottom:
-                        editor.putString(SHOW_TYPE_KEY, Constant.SHOW_TYPE.FROM_BOTTOM);
+                        editor.putString(CARD_SHOW_TYPE_KEY, Constant.CARD_SHOW_TYPE.FROM_BOTTOM);
+                        Constant.cardStyle = Trio.CardStyle.DIALOG;
                         break;
                     default:
                         break;
@@ -138,19 +133,32 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-        styleRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        String style = sp.getString(PROGRESS_STYLE_KEY, Constant.PROGRESS_STYLE_TYPE.CIRCLE);
+
+        if (style.equalsIgnoreCase(Constant.PROGRESS_STYLE_TYPE.CIRCLE)) {
+            circleBtn.setChecked(true);
+        } else if (style.equalsIgnoreCase(Constant.PROGRESS_STYLE_TYPE.LINE)) {
+            lineBtn.setChecked(true);
+        } else if (style.equalsIgnoreCase(Constant.PROGRESS_STYLE_TYPE.WAVE)) {
+            waveBtn.setChecked(true);
+        }
+
+        progressStyleRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 editor = sp.edit();
                 switch (i) {
                     case R.id.line_progress:
-                        editor.putString(STYLE_KEY, Constant.STYLE_TYPE.LINE);
+                        editor.putString(PROGRESS_STYLE_KEY, Constant.PROGRESS_STYLE_TYPE.LINE);
+                        Constant.progressBarMode = Trio.ProgressBarMode.TOP_LEFT_TO_RIGHT;
                         break;
                     case R.id.circle_progress:
-                        editor.putString(STYLE_KEY, Constant.STYLE_TYPE.CIRCLE);
+                        editor.putString(PROGRESS_STYLE_KEY, Constant.PROGRESS_STYLE_TYPE.CIRCLE);
+                        Constant.progressBarMode = Trio.ProgressBarMode.CIRCLE;
                         break;
                     case R.id.wave_progress:
-                        editor.putString(STYLE_KEY, Constant.STYLE_TYPE.WAVE);
+                        editor.putString(PROGRESS_STYLE_KEY, Constant.PROGRESS_STYLE_TYPE.WAVE);
+                        Constant.progressBarMode = Trio.ProgressBarMode.RADIATION;
                         break;
                     default:
                         break;
@@ -172,8 +180,13 @@ public class EditActivity extends AppCompatActivity {
         editor.putString(APP_KEY, appKey);
         editor.commit();
 
-        Trio.with().mUserID = sp.getString(USERID_KEY, "");
-        Trio.with().mAppkey = sp.getString(APP_KEY, "");
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName(EditActivity.this.getPackageName(),
+                "com.trio.nnpredict.TrioWrap.Trio$TrioBroadcastReceiver"));
+        intent.putExtra("trio_userId", sp.getString(USERID_KEY, ""));
+        intent.putExtra("trio_appKey", sp.getString(APP_KEY, ""));
+        sendBroadcast(intent);
+
         Trio.isTestEnv = isTestServer;
     }
 }
