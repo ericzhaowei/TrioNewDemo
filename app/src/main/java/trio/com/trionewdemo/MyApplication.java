@@ -49,7 +49,7 @@ public class MyApplication extends Application {
                 .equalsIgnoreCase(Constant.CARD_SHOW_TYPE.FROM_BOTTOM) ? Trio.CardStyle.DIALOG : Trio.CardStyle.ACTIVITY;
 
         // 进度条样式
-        switch (sp.getString(PROGRESS_STYLE_KEY, Constant.CARD_SHOW_TYPE.FROM_BOTTOM)) {
+        switch (sp.getString(PROGRESS_STYLE_KEY, Constant.PROGRESS_STYLE_TYPE.WAVE)) {
             case Constant.PROGRESS_STYLE_TYPE.CIRCLE:
                 Constant.progressBarMode = Trio.ProgressBarMode.CIRCLE;
                 break;

@@ -133,7 +133,7 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-        String style = sp.getString(PROGRESS_STYLE_KEY, Constant.PROGRESS_STYLE_TYPE.CIRCLE);
+        String style = sp.getString(PROGRESS_STYLE_KEY, Constant.PROGRESS_STYLE_TYPE.WAVE);
 
         if (style.equalsIgnoreCase(Constant.PROGRESS_STYLE_TYPE.CIRCLE)) {
             circleBtn.setChecked(true);

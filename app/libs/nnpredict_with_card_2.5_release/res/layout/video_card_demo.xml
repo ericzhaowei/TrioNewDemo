@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    android:background="@drawable/ui_card_background">
+
+    <include layout="@layout/ui_header" />
+
+    <FrameLayout
+        android:id="@+id/ui_surface_contrainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_video_height"
+        android:background="#000000">
+
+        <ImageView
+            android:id="@+id/ui_video_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"/>
+
+        <ViewStub
+            android:id="@+id/ui_video_loading_stub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout="@layout/video_loading_stub"/>
+
+    </FrameLayout>
+
+    <include layout="@layout/ui_buttons_group" />
+</LinearLayout>

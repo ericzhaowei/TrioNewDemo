@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/ui_card_background">
+
+    <include layout="@layout/ui_header" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:id="@+id/ui_pics0"
+            android:layout_width="match_parent"
+            android:layout_height="181dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/ui_title"
+            android:layout_width="161dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="10dp"
+            android:text="秒拍"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/ui_pics1"
+            app:layout_constraintTop_toBottomOf="@+id/ui_pics0"
+            tools:ignore="RtlCompat" />
+
+        <com.trio.uimodule.view.RatingStars
+            android:id="@+id/ui_rating_stars"
+            android:layout_width="75dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="6dp"
+            app:base_color="#dadada"
+            app:layout_constraintStart_toStartOf="@+id/ui_title"
+            app:layout_constraintTop_toBottomOf="@+id/ui_title"
+            app:max_score="5"
+            app:point_angle="45"
+            app:score_color="#ffbb00"
+            app:side_length="6dp"
+            app:space="1dp" />
+
+
+        <TextView
+            android:id="@+id/ui_desc1"
+            android:layout_width="87dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="2dp"
+            android:text="12M"
+            android:textColor="#898989"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/ui_rating_stars"
+            app:layout_constraintTop_toBottomOf="@+id/ui_title" />
+
+        <TextView
+            android:id="@+id/ui_desc2"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_background"
+            android:text="获取"
+            android:textColor="#04ec00"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/ui_pics1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ui_pics1"
+            tools:ignore="RtlCompat" />
+
+        <ImageView
+            android:id="@+id/ui_pics1"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ui_pics0"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/ui_ad_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="广告"
+            android:textSize="10sp"
+            android:padding="2dp"
+            android:textColor="@color/white"
+            android:background="@drawable/card_ad_tag_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"
+            tools:ignore="RtlCompat" />
+    </android.support.constraint.ConstraintLayout>
+
+    <include layout="@layout/ui_buttons_group" />
+</LinearLayout>

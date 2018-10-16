@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/ui_card_background">
+
+    <include layout="@layout/ui_header"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/ui_card_padding">
+
+        <ImageView
+            android:id="@+id/ui_pics0"
+            android:layout_width="@dimen/ui_tpl_11_pic_width"
+            android:layout_height="@dimen/ui_tpl_11_pic_height"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_marginLeft="110dp">
+
+            <TextView
+                android:id="@+id/ui_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/ui_title_size"
+                android:textStyle="bold"
+                android:maxLines="1"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.trio.uimodule.view.RatingStars
+                    android:id="@+id/ui_rating_stars"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"
+                    app:side_length="7dp"
+                    app:space="3dp"
+                    app:point_angle="53"
+                    app:base_color="#999999"
+                    app:score_color="#ff6634"/>
+
+                <TextView
+                    android:id="@+id/ui_desc3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="11sp"
+                    android:textColor="#b7b7b7"
+                    android:layout_marginLeft="5dp"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/ui_desc1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                style="@style/CardDescStyle"/>
+            <TextView
+                android:id="@+id/ui_desc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CardDescStyle"
+                android:maxLines="3"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <include layout="@layout/ui_buttons_group" />
+
+</LinearLayout>

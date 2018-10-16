@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="divider_aeaeae">#aeaeae</color>
+    <color name="gray_bkg">#edf4ff</color>
+    <color name="textBlue">#3b9bfe</color>
+    <color name="textGray">#aeaeae</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <declare-styleable name="JazzyViewPager"><attr name="style">
+            <enum name="standard" value="0"/>
+            <enum name="tablet" value="1"/>
+            <enum name="cubein" value="2"/>
+            <enum name="cubeout" value="3"/>
+            <enum name="flipvertical" value="4"/>
+            <enum name="fliphorizontal" value="5"/>
+            <enum name="stack" value="6"/>
+            <enum name="zoomin" value="7"/>
+            <enum name="zoomout" value="8"/>
+            <enum name="rotateup" value="9"/>
+            <enum name="rotatedown" value="10"/>
+            <enum name="accordion" value="11"/>
+        </attr><attr format="boolean" name="fadeEnabled"/><attr format="boolean" name="outlineEnabled"/><attr format="color|reference" name="outlineColor"/></declare-styleable>
+    <declare-styleable name="OvalProgressView"><attr format="color" name="ovalColor"/><attr format="color" name="fixTextColor"/><attr format="color" name="progressTextColor"/><attr format="dimension" name="ovalWidth"/><attr format="string" name="progressText"/><attr format="dimension" name="progressTextSize"/><attr format="string" name="fixText"/><attr format="dimension" name="fixTextSize"/></declare-styleable>
+    <declare-styleable name="Star"><attr format="dimension" name="side_length"/><attr format="integer" name="point_angle"/><attr format="dimension" name="space"/><attr format="integer" name="max_score"/><attr format="float" name="score"/><attr format="color" name="base_color"/><attr format="color" name="score_color"/><attr format="boolean" name="with_text"/><attr format="color" name="text_color"/><attr format="dimension" name="text_size"/></declare-styleable>
+    <declare-styleable name="TabLayoutView"><attr format="color" name="tlv_text_color"/><attr format="dimension" name="tlv_text_size"/><attr format="dimension" name="tlv_indicator_width"/><attr format="boolean" name="tlv_selectedTextBold"/></declare-styleable>
+    <declare-styleable name="WaveView"><attr format="color" name="wave_color"/><attr format="integer" name="wave_coreImageRadius"/><attr format="integer" name="wave_width"/></declare-styleable>
+    <dimen name="ui_card_padding">10dp</dimen>
+    <dimen name="ui_desc_size">14sp</dimen>
+    <dimen name="ui_header_height">30dp</dimen>
+    <dimen name="ui_header_icon_height">17dp</dimen>
+    <dimen name="ui_header_label_size">12sp</dimen>
+    <dimen name="ui_title_size">17sp</dimen>
+    <dimen name="ui_tpl_11_pic_height">70dp</dimen>
+    <dimen name="ui_tpl_11_pic_width">100dp</dimen>
+    <dimen name="ui_tpl_12_pic_width">80dp</dimen>
+    <dimen name="ui_tpl_13_pic_height">112dp</dimen>
+    <dimen name="ui_tpl_13_pic_width">80dp</dimen>
+    <dimen name="ui_tpl_32_pic_width">50dp</dimen>
+    <dimen name="ui_video_height">250dp</dimen>
+    <string name="app_name">NNPredictModule</string>
+    <string name="divide_action_all">全选</string>
+    <string name="divide_action_copy">复制</string>
+    <string name="divide_action_none">全不选</string>
+    <string name="divide_action_search">搜索</string>
+    <string name="divide_action_translate">翻译</string>
+    <string name="ui_divider">分词</string>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="CardDescStyle">
+        <item name="android:textSize">@dimen/ui_desc_size</item>
+        <item name="android:textColor">#999999</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="DivideActionButton">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@drawable/divide_action_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+</resources>

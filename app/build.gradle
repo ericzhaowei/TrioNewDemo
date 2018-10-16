@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "trio.com.trionewdemo"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -34,7 +34,7 @@ dependencies {
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
 
-    compile(name: 'nnpredict_with_card_2.2_release', ext: 'aar')
+    compile(name: 'nnpredict_with_card_2.5_release', ext: 'aar')
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:design:27.1.1'
 }
