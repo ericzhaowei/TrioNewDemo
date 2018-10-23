@@ -1,8 +1,11 @@
 package trio.com.trionewdemo;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -68,7 +71,7 @@ public class MyApplication extends Application {
                 .assetManager(getAssets())
                 .timeOut(5000)
                 .userID(userID)  // YOUR USERID
-                .appkey(APP_KEY) // YOUR APPKEY
+                .appkey(appKey) // YOUR APPKEY
                 .setTest(isTestServer) // 是否使用测试环境
                 .build(new InitProgressListener() {
                     @Override
