@@ -1,6 +1,7 @@
 package trio.com.trionewdemo;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.trio.nnpredict.LocalPredict.NNPredict;
 import com.trio.nnpredict.TrioWrap.Trio;
 import com.trio.nnpredict.Utils.MACUtil;
 
@@ -83,15 +85,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 获取手机唯一标志权限
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+        // 获取手机唯一标志，定位，联系人权限
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS}, 1);
         }
 
-        // 获取Location权限
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
-        }
     }
 
     @Override
@@ -99,6 +100,18 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Trio.UNIQUE_ID = MACUtil.getUniqueId(this) ;
+            }
+            if (grantResults.length == 3 && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                new Thread(){
+                    @Override
+                    public void run() {
+                        try {
+                            NNPredict.phoneBookTrie = NNPredict.getNNPredictInstance().buildPhoneBookTrie();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
             }
         }
     }
