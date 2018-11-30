@@ -30,12 +30,12 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    compile(name: 'nnpredict_with_card_2.9_release', ext: 'aar')
+    compile(name: 'nnpredict_with_card_3.3_release', ext: 'aar')
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.hyman:flowlayout-lib:1.1.2'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-
+    implementation 'com.airbnb.android:lottie:2.7.0'
     implementation 'com.android.support:design:27.1.1'
 }

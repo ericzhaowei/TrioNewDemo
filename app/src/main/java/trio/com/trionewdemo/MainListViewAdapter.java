@@ -1,7 +1,5 @@
 package trio.com.trionewdemo;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.text.SpannableString;
@@ -24,9 +22,6 @@ import com.trio.nnpredict.TrioWrap.Trio;
 import java.util.ArrayList;
 
 import trio.com.trionewdemo.model.ListItemData;
-
-import static trio.com.trionewdemo.Constant.SP_NAME;
-import static trio.com.trionewdemo.Constant.PROGRESS_STYLE_KEY;
 
 public class MainListViewAdapter extends BaseAdapter {
     private ArrayList<ListItemData> mData;
@@ -156,7 +151,7 @@ public class MainListViewAdapter extends BaseAdapter {
 //                        if (motionEvent.getSize() > 0.2) {
                             Point p = new Point((int)motionEvent.getRawX(), (int)motionEvent.getRawY());
 
-                            Trio.with(mainActivity).showCard(Constant.cardStyle).withProgress(Constant.progressBarMode, p)
+                            Trio.with(mainActivity).showCard(true).UIType(Constant.uiType)
                                     .requestNERInfo(item.content, new RequestCallback<NerResult>() {
                                         @Override
                                         public void onSuccess(NerResult nerResult) {

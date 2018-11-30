@@ -1,12 +1,8 @@
 package trio.com.trionewdemo;
 
-import android.Manifest;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.trio.nnpredict.TrioWrap.InitProgressListener;
@@ -14,12 +10,10 @@ import com.trio.nnpredict.TrioWrap.Trio;
 import com.trio.nnpredict.Utils.Consts;
 
 import static trio.com.trionewdemo.Constant.APP_KEY;
-import static trio.com.trionewdemo.Constant.CARD_SHOW_TYPE_KEY;
-import static trio.com.trionewdemo.Constant.PROGRESS_STYLE_KEY;
+import static trio.com.trionewdemo.Constant.UI_TYPE_KEY;
 import static trio.com.trionewdemo.Constant.SERVER_TYPE_KEY;
 import static trio.com.trionewdemo.Constant.SP_NAME;
 import static trio.com.trionewdemo.Constant.USERID_KEY;
-import static trio.com.trionewdemo.Constant.cardStyle;
 
 public class MyApplication extends Application {
     private SharedPreferences sp;
@@ -47,23 +41,19 @@ public class MyApplication extends Application {
         editor.putString(APP_KEY, appKey);
         editor.commit();
 
-        // card类型
-        Constant.cardStyle = sp.getString(CARD_SHOW_TYPE_KEY, Constant.CARD_SHOW_TYPE.FROM_BOTTOM)
-                .equalsIgnoreCase(Constant.CARD_SHOW_TYPE.FROM_BOTTOM) ? Trio.CardStyle.DIALOG : Trio.CardStyle.ACTIVITY;
-
         // 进度条样式
-        switch (sp.getString(PROGRESS_STYLE_KEY, Constant.PROGRESS_STYLE_TYPE.WAVE)) {
-            case Constant.PROGRESS_STYLE_TYPE.CIRCLE:
-                Constant.progressBarMode = Trio.ProgressBarMode.CIRCLE;
+        switch (sp.getString(UI_TYPE_KEY, "0")) {
+            case "0":
+                Constant.uiType = Trio.UIType.UI_ONE;
                 break;
-            case Constant.PROGRESS_STYLE_TYPE.LINE:
-                Constant.progressBarMode = Trio.ProgressBarMode.TOP_LEFT_TO_RIGHT;
+            case "1":
+                Constant.uiType = Trio.UIType.UI_TWO;
                 break;
-            case Constant.PROGRESS_STYLE_TYPE.WAVE:
-                Constant.progressBarMode = Trio.ProgressBarMode.RADIATION;
+            case "2":
+                Constant.uiType = Trio.UIType.UI_THREE;
                 break;
             default:
-                Constant.progressBarMode = Trio.ProgressBarMode.RADIATION;
+                Constant.uiType = Trio.UIType.UI_ONE;
         }
 
         Trio trio = new Trio.Builder()
