@@ -76,5 +76,10 @@ public class MyApplication extends Application {
                 });
 
         Trio.setSingletonInstance(trio);
+
+        // 启动crash handler
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
+
     }
 }
