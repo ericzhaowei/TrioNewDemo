@@ -142,7 +142,6 @@ public class MainListViewAdapter extends BaseAdapter {
                                         Log.i("", "onError: ");
                                     }
                                 });
-
                         return false;
                     }
                 });
