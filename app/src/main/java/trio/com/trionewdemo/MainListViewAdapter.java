@@ -125,57 +125,35 @@ public class MainListViewAdapter extends BaseAdapter {
                     }
                 });
             } else {
-                final GestureDetector gestureDetector = new GestureDetector(new GestureDetector.OnGestureListener() {
+                // 这里不能使用view.setOnClickListener，无响应，需要使用viewHolder.textView.setOnClickListener
+                // 估计是左滑删除功能导致的
+                viewHolder.textView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
-                    public boolean onDown(MotionEvent motionEvent) {
-                        return false;
-                    }
+                    public boolean onLongClick(View view) {
+                        Trio.with(mainActivity).showCard(true).UIType(Constant.uiType)
+                                .requestNERInfo(item.content, new RequestCallback<NerResult>() {
+                                    @Override
+                                    public void onSuccess(NerResult nerResult) {
+                                        Log.i("", "onSuccess: ");
+                                    }
 
-                    @Override
-                    public void onShowPress(MotionEvent motionEvent) {
+                                    @Override
+                                    public void onError(String s) {
+                                        Log.i("", "onError: ");
+                                    }
+                                });
 
-                    }
-
-                    @Override
-                    public boolean onSingleTapUp(MotionEvent motionEvent) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-                        return false;
-                    }
-
-                    @Override
-                    public void onLongPress(MotionEvent motionEvent) {
-//                        if (motionEvent.getSize() > 0.2) {
-                            Point p = new Point((int)motionEvent.getRawX(), (int)motionEvent.getRawY());
-
-                            Trio.with(mainActivity).showCard(true).UIType(Constant.uiType)
-                                    .requestNERInfo(item.content, new RequestCallback<NerResult>() {
-                                        @Override
-                                        public void onSuccess(NerResult nerResult) {
-                                            Log.i("", "onSuccess: ");
-                                        }
-
-                                        @Override
-                                        public void onError(String s) {
-                                            Log.i("", "onError: ");
-                                        }
-                                    });
-//                        }
-                    }
-
-                    @Override
-                    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
                         return false;
                     }
                 });
 
-                view.setOnTouchListener(new View.OnTouchListener() {
+                viewHolder.textView.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent motionEvent) {
-                        return gestureDetector.onTouchEvent(motionEvent);
+                        if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                            Trio.with(mainActivity).cancelRequest();
+                        }
+                        return false;
                     }
                 });
             }
