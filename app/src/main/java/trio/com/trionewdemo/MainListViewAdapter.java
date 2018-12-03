@@ -69,24 +69,24 @@ public class MainListViewAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
 
 //        if (convertView == null) { // 出现左滑删除的条目在复用的时候有问题，暂停复用
-            switch (getItemViewType(position)) {
-                case ItemType.HEAD_TYPE:
-                    view = LayoutInflater.from(mainActivity).inflate(R.layout.group_header_item, null);
-                    viewHolder = new ViewHolder();
-                    viewHolder.textView = view.findViewById(R.id.text_view);
-                    view.setTag(viewHolder);
+        switch (getItemViewType(position)) {
+            case ItemType.HEAD_TYPE:
+                view = LayoutInflater.from(mainActivity).inflate(R.layout.group_header_item, null);
+                viewHolder = new ViewHolder();
+                viewHolder.textView = view.findViewById(R.id.text_view);
+                view.setTag(viewHolder);
 
-                    break;
-                case ItemType.CONTENT_TYPE:
-                    view = LayoutInflater.from(mainActivity).inflate(R.layout.list_view_item, null);
-                    viewHolder = new ViewHolder();
-                    viewHolder.textView = view.findViewById(R.id.text_view);
-                    viewHolder.deleteTV = view.findViewById(R.id.tv_delete);
-                    view.setTag(viewHolder);
-                    break;
-                default:
-                    break;
-            }
+                break;
+            case ItemType.CONTENT_TYPE:
+                view = LayoutInflater.from(mainActivity).inflate(R.layout.list_view_item, null);
+                viewHolder = new ViewHolder();
+                viewHolder.textView = view.findViewById(R.id.text_view);
+                viewHolder.deleteTV = view.findViewById(R.id.tv_delete);
+                view.setTag(viewHolder);
+                break;
+            default:
+                break;
+        }
 //        } else {
 //            viewHolder = (ViewHolder) convertView.getTag();
 //            view = convertView;
@@ -142,6 +142,7 @@ public class MainListViewAdapter extends BaseAdapter {
                                         Log.i("", "onError: ");
                                     }
                                 });
+
                         return false;
                     }
                 });
