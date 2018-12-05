@@ -120,6 +120,14 @@
                     android:textColor="@color/text_black_666666"
                     android:textSize="@dimen/primary_smaller_size" />
             </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="测试版本：001"/>
+
         </LinearLayout>
 
     </ScrollView>
