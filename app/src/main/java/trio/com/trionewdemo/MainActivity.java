@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import com.trio.nnpredict.LocalPredict.NNPredict;
 import com.trio.nnpredict.TrioWrap.Trio;
 import com.trio.nnpredict.Utils.MACUtil;
+import com.trio.nnpredict.Utils.PermissionUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -85,38 +86,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 获取手机唯一标志，定位，联系人权限
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_CONTACTS
-                    , Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        }
-
+        // 获取权限
+        PermissionUtil.requestSDKPermission(this);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Trio.UNIQUE_ID = MACUtil.getUniqueId(this) ;
-            }
-            if (grantResults.length == 3 && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
-                new Thread(){
-                    @Override
-                    public void run() {
-                        try {
-                            NNPredict.phoneBookTrie = NNPredict.getNNPredictInstance().buildPhoneBookTrie();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
-            }
-        }
+        PermissionUtil.permissionCallBack(this, requestCode, permissions, grantResults);
     }
 
     @Override
